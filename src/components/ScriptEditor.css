@@ -1,0 +1,39 @@
+.script-editor {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.editor-container {
+  background: var(--card-background);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.title-input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: border-color 0.3s;
+}
+
+.title-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.title-input::placeholder {
+  color: #aaa;
+  font-weight: normal;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
