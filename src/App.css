@@ -42,18 +42,20 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-glow);
-  animation: pulse 2s infinite;
+  animation: float 3s ease-in-out infinite;
 }
 
-@keyframes pulse {
+@keyframes float {
 
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(255, 0, 80, 0.4);
+    transform: translateY(0);
+    box-shadow: 0 0 20px var(--accent-glow);
   }
 
   50% {
-    box-shadow: 0 0 40px rgba(255, 0, 80, 0.6);
+    transform: translateY(-6px);
+    box-shadow: 0 10px 40px var(--accent-glow);
   }
 }
 
@@ -82,7 +84,7 @@
 /* Main Content */
 .main-content {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
@@ -110,8 +112,8 @@
 }
 
 .input-section:hover {
-  border-color: rgba(255, 0, 80, 0.3);
-  box-shadow: 0 0 40px rgba(255, 0, 80, 0.1);
+  border-color: rgba(0, 212, 170, 0.3);
+  box-shadow: 0 0 40px rgba(0, 212, 170, 0.08);
 }
 
 .input-wrapper {
@@ -122,7 +124,7 @@
 .url-input {
   flex: 1;
   background: var(--bg-glass);
-  border: 1px solid var(--border-color);
+  border: 2px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 16px 20px;
   font-size: 1rem;
@@ -137,8 +139,8 @@
 }
 
 .url-input:focus {
-  border-color: rgba(255, 0, 80, 0.5);
-  box-shadow: 0 0 20px rgba(255, 0, 80, 0.15);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 4px rgba(0, 212, 170, 0.1);
 }
 
 .extract-btn {
@@ -153,11 +155,28 @@
   font-family: inherit;
   transition: all 0.3s ease;
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.extract-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.extract-btn:hover::before {
+  left: 100%;
 }
 
 .extract-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 0, 80, 0.4);
+  box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3);
 }
 
 .extract-btn:active {
@@ -172,12 +191,12 @@
 
 /* Error Message */
 .error-message {
-  background: rgba(255, 65, 108, 0.1);
-  border: 1px solid rgba(255, 65, 108, 0.3);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: var(--radius-md);
   padding: 16px;
   margin-top: 16px;
-  color: #ff6b8a;
+  color: #f87171;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -236,7 +255,8 @@
 /* Thumbnail Grid */
 .thumbnail-grid {
   display: grid;
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
 .thumbnail-card {
@@ -245,30 +265,34 @@
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .thumbnail-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 0, 80, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(0, 212, 170, 0.4);
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(0, 212, 170, 0.1);
 }
 
 .thumbnail-image-wrapper {
   position: relative;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.3);
+  aspect-ratio: 16/9;
 }
 
 .thumbnail-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
 }
 
 .thumbnail-card:hover .thumbnail-image {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 .thumbnail-overlay {
@@ -288,53 +312,59 @@
 }
 
 .thumbnail-info {
-  padding: 20px;
+  padding: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 12px;
 }
 
 .quality-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
+  min-width: 0;
 }
 
 .quality-label {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-primary);
 }
 
 .quality-size {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .download-btn {
-  background: var(--secondary-gradient);
+  background: var(--primary-gradient);
   border: none;
-  border-radius: var(--radius-md);
-  padding: 12px 24px;
-  font-size: 0.95rem;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 0.85rem;
   font-weight: 500;
   color: white;
   cursor: pointer;
   font-family: inherit;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .download-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 212, 170, 0.3);
 }
 
 .download-btn svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 
 /* Loading State */
@@ -342,14 +372,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 100px 20px;
+  position: absolute;
+  inset: 0;
+  background: var(--bg-dark);
 }
 
 .loading-spinner {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border: 3px solid var(--border-color);
-  border-top-color: #ff0050;
+  border-top-color: var(--accent-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -366,13 +398,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
+  height: 100%;
+  min-height: 120px;
   color: var(--text-muted);
-  gap: 12px;
+  gap: 8px;
+  font-size: 0.9rem;
 }
 
 .image-error-icon {
-  font-size: 3rem;
+  font-size: 2rem;
   opacity: 0.5;
 }
 
@@ -386,17 +420,27 @@
 }
 
 .footer a {
-  color: var(--text-secondary);
+  color: var(--accent-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footer a:hover {
-  color: #ff0050;
+  color: #00b4d8;
 }
 
 /* Responsive */
+@media (max-width: 900px) {
+  .thumbnail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 640px) {
+  .thumbnail-grid {
+    grid-template-columns: 1fr;
+  }
+
   .title {
     font-size: 1.8rem;
   }
@@ -419,7 +463,7 @@
 
   .thumbnail-info {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     align-items: flex-start;
   }
 
