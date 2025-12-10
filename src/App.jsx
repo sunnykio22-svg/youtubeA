@@ -130,66 +130,70 @@ function App() {
           )}
         </section>
 
-        {/* 결과 섹션 */}
-        {videoId && (
-          <section className="results-section">
-            <div className="results-header">
-              <h2 className="results-title">🎬 추출된 썸네일</h2>
-              <span className="video-id-badge">ID: {videoId}</span>
-            </div>
+        {/* 결과 섹션 - 항상 표시 */}
+        <section className="results-section">
+          <div className="results-header">
+            <h2 className="results-title">🎬 {videoId ? '추출된 썸네일' : '썸네일 미리보기'}</h2>
+            {videoId && <span className="video-id-badge">ID: {videoId}</span>}
+          </div>
 
-            <div className="thumbnail-grid">
-              {THUMBNAIL_QUALITIES.map((quality) => (
-                <div key={quality.id} className="thumbnail-card">
-                  <div className="thumbnail-image-wrapper">
-                    {!failedImages[quality.id] ? (
-                      <>
-                        {!loadedImages[quality.id] && (
-                          <div className="loading-overlay">
-                            <div className="loading-spinner"></div>
-                          </div>
-                        )}
-                        <img
-                          src={`https://img.youtube.com/vi/${videoId}/${quality.id}.jpg`}
-                          alt={`${quality.label} 썸네일`}
-                          className="thumbnail-image"
-                          onLoad={() => handleImageLoad(quality.id)}
-                          onError={() => handleImageError(quality.id)}
-                          style={{ display: loadedImages[quality.id] ? 'block' : 'none' }}
-                        />
-                      </>
-                    ) : (
-                      <div className="image-error">
-                        <span className="image-error-icon">🖼️</span>
-                        <span>이 화질은 사용할 수 없습니다</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="thumbnail-info">
-                    <div className="quality-info">
-                      <span className="quality-label">{quality.label}</span>
-                      <span className="quality-size">{quality.size} • {quality.desc}</span>
+          <div className="thumbnail-grid">
+            {THUMBNAIL_QUALITIES.map((quality) => (
+              <div key={quality.id} className="thumbnail-card">
+                <div className="thumbnail-image-wrapper">
+                  {!videoId ? (
+                    /* 빈 플레이스홀더 */
+                    <div className="image-placeholder">
+                      <span className="placeholder-icon">🖼️</span>
+                      <span>URL 입력 후 추출</span>
                     </div>
-
-                    {!failedImages[quality.id] && (
-                      <button
-                        className="download-btn"
-                        onClick={() => handleDownload(quality.id, quality.label)}
-                        id={`download-${quality.id}`}
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                        </svg>
-                        다운로드
-                      </button>
-                    )}
-                  </div>
+                  ) : !failedImages[quality.id] ? (
+                    <>
+                      {!loadedImages[quality.id] && (
+                        <div className="loading-overlay">
+                          <div className="loading-spinner"></div>
+                        </div>
+                      )}
+                      <img
+                        src={`https://img.youtube.com/vi/${videoId}/${quality.id}.jpg`}
+                        alt={`${quality.label} 썸네일`}
+                        className="thumbnail-image"
+                        onLoad={() => handleImageLoad(quality.id)}
+                        onError={() => handleImageError(quality.id)}
+                        style={{ display: loadedImages[quality.id] ? 'block' : 'none' }}
+                      />
+                    </>
+                  ) : (
+                    <div className="image-error">
+                      <span className="image-error-icon">🖼️</span>
+                      <span>이 화질은 사용할 수 없습니다</span>
+                    </div>
+                  )}
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+
+                <div className="thumbnail-info">
+                  <div className="quality-info">
+                    <span className="quality-label">{quality.label}</span>
+                    <span className="quality-size">{quality.size} • {quality.desc}</span>
+                  </div>
+
+                  {videoId && !failedImages[quality.id] && (
+                    <button
+                      className="download-btn"
+                      onClick={() => handleDownload(quality.id, quality.label)}
+                      id={`download-${quality.id}`}
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                      </svg>
+                      다운로드
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
 
       {/* 푸터 */}
