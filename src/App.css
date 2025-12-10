@@ -42,22 +42,9 @@
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-glow);
-  animation: float 3s ease-in-out infinite;
 }
 
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translateY(0);
-    box-shadow: 0 0 20px var(--accent-glow);
-  }
-
-  50% {
-    transform: translateY(-6px);
-    box-shadow: 0 10px 40px var(--accent-glow);
-  }
-}
+/* 플로팅 애니메이션 제거 - 더 자연스러운 느낌 */
 
 .logo-icon svg {
   width: 32px;
@@ -112,8 +99,8 @@
 }
 
 .input-section:hover {
-  border-color: rgba(0, 212, 170, 0.3);
-  box-shadow: 0 0 40px rgba(0, 212, 170, 0.08);
+  border-color: rgba(229, 57, 53, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .input-wrapper {
@@ -175,8 +162,8 @@
 }
 
 .extract-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 212, 170, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(229, 57, 53, 0.25);
 }
 
 .extract-btn:active {
@@ -269,11 +256,9 @@
 }
 
 .thumbnail-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(0, 212, 170, 0.4);
-  box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(0, 212, 170, 0.1);
+  transform: translateY(-4px);
+  border-color: rgba(229, 57, 53, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .thumbnail-image-wrapper {
@@ -358,8 +343,8 @@
 }
 
 .download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 212, 170, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.2);
 }
 
 .download-btn svg {
